@@ -121,9 +121,9 @@ public class LANSimulation {
 		} else if (args[0].equals("t")) {//'test' command
 			doRegressionTests();
 		} else if (args[0].equals("s")) {//'simulate' command
-			Integer nrOfIters = new Integer(1);
+			Integer nrOfIters = Integer.valueOf(1);
 			if (args.length > 1) {
-				nrOfIters = new Integer(args[1]);
+				nrOfIters = Integer.valueOf(args[1]);
 			};
 
 			for (int i = 0; i < nrOfIters.intValue(); i++) {

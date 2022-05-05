@@ -22,8 +22,6 @@ package lanSimulation.tests;
 import lanSimulation.internals.*;
 import lanSimulation.*;
 import junit.framework.*;
-import junit.extensions.*;
-import java.lang.AssertionError;
 import java.io.*;
 
 public class LANTests extends TestCase {

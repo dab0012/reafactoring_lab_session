@@ -246,7 +246,7 @@ the tests should work as expected.
 	public void test() {
 	    Network network = Network.DefaultExample();
 	    StringWriter report = new StringWriter(100);
-	    network.requestWorkstationPrintsDocument("UnknownWorkstation",
+	    network.requestWorkstationPrintsDocument("Hans",
 					      "does not matter", "does not matter", report);
 	}
 

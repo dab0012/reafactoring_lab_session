@@ -324,6 +324,7 @@ public class Network {
 		String author = "Unknown";
 		String title = "Untitled";
 		int startPos = 0, endPos = 0;
+		String cadena= "";
 
 		if (printer.type_ == Node.PRINTER) {
 			try {
@@ -348,26 +349,17 @@ public class Network {
 						title = document.message_.substring(startPos + 6, endPos);
 					}
 					;
-					report.write("\tAccounting -- author = '");
-					report.write(author);
-					report.write("' -- title = '");
-					report.write(title);
-					report.write("'\n");
-					report.write(">>> Postscript job delivered.\n\n");
-					report.flush();
+					
+				cadena=">>> Postscript job delivered.\n\n";
+					accounting(report, author, title, cadena);
 				} else {
 					title = "ASCII DOCUMENT";
 					if (document.message_.length() >= 16) {
 						author = document.message_.substring(8, 16);
 					}
 					;
-					report.write("\tAccounting -- author = '");
-					report.write(author);
-					report.write("' -- title = '");
-					report.write(title);
-					report.write("'\n");
-					report.write(">>> ASCII Print job delivered.\n\n");
-					report.flush();
+					cadena=">>> ASCII Print job delivered.\n\n";
+					accounting(report, author, title, cadena);
 				}
 				;
 			} catch (IOException exc) {
@@ -385,6 +377,16 @@ public class Network {
 			;
 			return false;
 		}
+	}
+
+	private void accounting(Writer report, String author, String title, String cadena) throws IOException {
+		report.write("\tAccounting -- author = '");
+		report.write(author);
+		report.write("' -- title = '");
+		report.write(title);
+		report.write("'\n");
+		report.write(cadena);
+		report.flush();
 	}
 
 	/**

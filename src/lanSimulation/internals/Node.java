@@ -97,4 +97,63 @@ public class Node {
 		;
 	}
 
+	public boolean printDocument(Network network, Packet document, Writer report) {
+		String author = "Unknown";
+		String title = "Untitled";
+		int startPos = 0, endPos = 0;
+		String cadena= "";
+	
+		if (type_ == Node.PRINTER) {
+			try {
+				if (document.message_.startsWith("!PS")) {
+					startPos = document.message_.indexOf("author:");
+					if (startPos >= 0) {
+						endPos = document.message_.indexOf(".", startPos + 7);
+						if (endPos < 0) {
+							endPos = document.message_.length();
+						}
+						;
+						author = document.message_.substring(startPos + 7, endPos);
+					}
+					;
+					startPos = document.message_.indexOf("title:");
+					if (startPos >= 0) {
+						endPos = document.message_.indexOf(".", startPos + 6);
+						if (endPos < 0) {
+							endPos = document.message_.length();
+						}
+						;
+						title = document.message_.substring(startPos + 6, endPos);
+					}
+					;
+					
+				cadena=">>> Postscript job delivered.\n\n";
+					network.accounting(report, author, title, cadena);
+				} else {
+					title = "ASCII DOCUMENT";
+					if (document.message_.length() >= 16) {
+						author = document.message_.substring(8, 16);
+					}
+					;
+					cadena=">>> ASCII Print job delivered.\n\n";
+					network.accounting(report, author, title, cadena);
+				}
+				;
+			} catch (IOException exc) {
+				// just ignore
+			}
+			;
+			return true;
+		} else {
+			try {
+				report.write(">>> Destinition is not a printer, print job cancelled.\n\n");
+				report.flush();
+			} catch (IOException exc) {
+				// just ignore
+			}
+			;
+			return false;
+		}
+	}
+
 }

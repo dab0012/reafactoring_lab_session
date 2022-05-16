@@ -286,7 +286,7 @@ public class Network {
 		;
 
 		if (packet.destination_.equals(currentNode.name_)) {
-			result = printDocument(currentNode, packet, report);
+			result = currentNode.printDocument(this, packet, report);
 		} else {
 			try {
 				report.write(">>> Destinition not found, print job cancelled.\n\n");
@@ -301,66 +301,7 @@ public class Network {
 		return result;
 	}
 
-	private boolean printDocument(Node printer, Packet document, Writer report) {
-		String author = "Unknown";
-		String title = "Untitled";
-		int startPos = 0, endPos = 0;
-		String cadena= "";
-
-		if (printer.type_ == Node.PRINTER) {
-			try {
-				if (document.message_.startsWith("!PS")) {
-					startPos = document.message_.indexOf("author:");
-					if (startPos >= 0) {
-						endPos = document.message_.indexOf(".", startPos + 7);
-						if (endPos < 0) {
-							endPos = document.message_.length();
-						}
-						;
-						author = document.message_.substring(startPos + 7, endPos);
-					}
-					;
-					startPos = document.message_.indexOf("title:");
-					if (startPos >= 0) {
-						endPos = document.message_.indexOf(".", startPos + 6);
-						if (endPos < 0) {
-							endPos = document.message_.length();
-						}
-						;
-						title = document.message_.substring(startPos + 6, endPos);
-					}
-					;
-					
-				cadena=">>> Postscript job delivered.\n\n";
-					accounting(report, author, title, cadena);
-				} else {
-					title = "ASCII DOCUMENT";
-					if (document.message_.length() >= 16) {
-						author = document.message_.substring(8, 16);
-					}
-					;
-					cadena=">>> ASCII Print job delivered.\n\n";
-					accounting(report, author, title, cadena);
-				}
-				;
-			} catch (IOException exc) {
-				// just ignore
-			}
-			;
-			return true;
-		} else {
-			try {
-				report.write(">>> Destinition is not a printer, print job cancelled.\n\n");
-				report.flush();
-			} catch (IOException exc) {
-				// just ignore
-			}
-			;
-			return false;
-		}
-	}
-
-	private void accounting(Writer report, String author, String title, String cadena) throws IOException {
+	public void accounting(Writer report, String author, String title, String cadena) throws IOException {
 		report.write("\tAccounting -- author = '");
 		report.write(author);
 		report.write("' -- title = '");

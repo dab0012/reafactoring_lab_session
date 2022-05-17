@@ -225,7 +225,7 @@ public class Network {
 			;				
 			currentNode.logging(report, this);
 			currentNode = currentNode.nextNode_;
-		} while (!atDestination(currentNode, packet));
+		} while (!packet.atDestination(currentNode));
 
 		try {
 			report.write(">>> Broadcast travelled whole token ring.\n\n");
@@ -301,13 +301,13 @@ public class Network {
 
 		startNode.logging(report, this);
 		currentNode = startNode.nextNode_;
-		while ((!atDestination(currentNode, packet)) & (!atOrigin(currentNode, packet))) {
+		while ((!packet.atDestination(currentNode)) & (!packet.atOrigin(currentNode))) {
 			currentNode.logging(report, this);
 			currentNode = currentNode.nextNode_;
 		}
 		;
 
-		if (atDestination(currentNode, packet)) {
+		if (packet.atDestination(currentNode)) {
 			result = currentNode.printDocument(this, packet, report);
 		} else {
 			try {
@@ -321,14 +321,6 @@ public class Network {
 		}
 
 		return result;
-	}
-
-	private boolean atOrigin(Node currentNode, Packet packet) {
-		return packet.origin_.equals(currentNode.name_);
-	}
-
-	private boolean atDestination(Node node, Packet packet) {
-		return packet.destination_.equals(node.name_);
 	}
 
 	public void accounting(Writer report, String author, String title, String cadena) throws IOException {
@@ -389,7 +381,7 @@ public class Network {
 			;
 			buf.append(" -> ");
 			currentNode = currentNode.nextNode_;
-		} while (atDestination(currentNode, destination));
+		} while (currentNode.atDestination(destination));
 		buf.append(" ... ");
 	}
 
@@ -432,7 +424,7 @@ public class Network {
 			;
 			buf.append(" </LI>");
 			currentNode = currentNode.nextNode_;
-		} while (atDestination(currentNode, destination));
+		} while (currentNode.atDestination(destination));
 		buf.append("\n\t<LI>...</LI>\n</UL>\n\n</BODY>\n</HTML>\n");
 	}
 
@@ -473,12 +465,8 @@ public class Network {
 			}
 			;
 			currentNode = currentNode.nextNode_;
-		} while (atDestination(currentNode, destination));
+		} while (currentNode.atDestination(destination));
 		buf.append("\n</network>");
-	}
-
-	private boolean atDestination(Node currentNode, Node detination) {
-		return currentNode != detination;
 	}
 
 }

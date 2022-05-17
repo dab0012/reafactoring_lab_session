@@ -19,6 +19,8 @@
  */
 package lanSimulation.internals;
 
+import lanSimulation.Network;
+
 /**
  * A <em>Packet</em> represents a unit of information to be sent over the Local
  * Area Network (LAN).
@@ -53,6 +55,14 @@ public class Packet {
 		message_ = message;
 		origin_ = origin;
 		destination_ = destination;
+	}
+
+	public boolean atDestination(Node node) {
+		return destination_.equals(node.name_);
+	}
+
+	public boolean atOrigin(Node currentNode) {
+		return origin_.equals(currentNode.name_);
 	}
 
 }

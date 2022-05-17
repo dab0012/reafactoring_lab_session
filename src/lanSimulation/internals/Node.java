@@ -156,4 +156,8 @@ public class Node {
 		}
 	}
 
+	public boolean atDestination(Node destination) {
+		return this != destination;
+	}
+
 }

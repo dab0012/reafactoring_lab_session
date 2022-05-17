@@ -210,30 +210,39 @@ public class Network {
 		} catch (IOException exc) {
 			// just ignore
 		}
-		;
 
 		Node currentNode = firstNode_;
 		Packet packet = new Packet("BROADCAST", firstNode_.name_, firstNode_.name_);
-		do {
-			try {
-				report.write("\tNode '");
-				report.write(currentNode.name_);
-				report.write("' accepts broadcase packet.\n");
-			} catch (IOException exc) {
-				// just ignore
-			}
-			;				
-			currentNode.logging(report, this);
-			currentNode = currentNode.nextNode_;
-		} while (!atDestination(currentNode, packet));
+		
+		currentNode = send(currentNode, packet, report);
 
 		try {
 			report.write(">>> Broadcast travelled whole token ring.\n\n");
 		} catch (IOException exc) {
 			// just ignore
 		}
-		;
+		
 		return true;
+	}
+	
+	private Node send(Node currentNode, Packet packet, Writer report) {
+		
+		try {
+			report.write("\tNode '");
+			report.write(currentNode.name_);
+			report.write("' accepts broadcase packet.\n");
+		} catch (IOException exc) {
+				// just ignore
+		}
+		
+		currentNode.logging(report, this);
+		currentNode=currentNode.nextNode_;
+		
+		if (!atDestination(currentNode, packet)) {
+			send(currentNode, packet, report);
+		}
+		return currentNode;
+
 	}
 
 	/**

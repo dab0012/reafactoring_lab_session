@@ -301,7 +301,7 @@ public class Network {
 
 		startNode.logging(report, this);
 		currentNode = startNode.nextNode_;
-		while ((!atDestination(currentNode, packet)) & (!packet.origin_.equals(currentNode.name_))) {
+		while ((!atDestination(currentNode, packet)) & (!atOrigin(currentNode, packet))) {
 			currentNode.logging(report, this);
 			currentNode = currentNode.nextNode_;
 		}
@@ -321,6 +321,10 @@ public class Network {
 		}
 
 		return result;
+	}
+
+	private boolean atOrigin(Node currentNode, Packet packet) {
+		return packet.origin_.equals(currentNode.name_);
 	}
 
 	private boolean atDestination(Node node, Packet packet) {

@@ -337,6 +337,7 @@ public class Network {
 	public void printOn(StringBuffer buf) {
 		assert isInitialized();
 		Node currentNode = firstNode_;
+		Node destination = firstNode_;
 		do {
 			switch (currentNode.type_) {
 			case Node.NODE:
@@ -362,7 +363,7 @@ public class Network {
 			;
 			buf.append(" -> ");
 			currentNode = currentNode.nextNode_;
-		} while (currentNode != firstNode_);
+		} while (atDestination(currentNode, destination));
 		buf.append(" ... ");
 	}
 
@@ -377,6 +378,7 @@ public class Network {
 
 		buf.append("<HTML>\n<HEAD>\n<TITLE>LAN Simulation</TITLE>\n</HEAD>\n<BODY>\n<H1>LAN SIMULATION</H1>");
 		Node currentNode = firstNode_;
+		Node destination = firstNode_;
 		buf.append("\n\n<UL>");
 		do {
 			buf.append("\n\t<LI> ");
@@ -404,7 +406,7 @@ public class Network {
 			;
 			buf.append(" </LI>");
 			currentNode = currentNode.nextNode_;
-		} while (currentNode != firstNode_);
+		} while (atDestination(currentNode, destination));
 		buf.append("\n\t<LI>...</LI>\n</UL>\n\n</BODY>\n</HTML>\n");
 	}
 
@@ -418,6 +420,7 @@ public class Network {
 		assert isInitialized();
 
 		Node currentNode = firstNode_;
+		Node destination = firstNode_;
 		buf.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<network>");
 		do {
 			buf.append("\n\t");
@@ -444,8 +447,12 @@ public class Network {
 			}
 			;
 			currentNode = currentNode.nextNode_;
-		} while (currentNode != firstNode_);
+		} while (atDestination(currentNode, destination));
 		buf.append("\n</network>");
+	}
+
+	private boolean atDestination(Node currentNode, Node detination) {
+		return currentNode != detination;
 	}
 
 }

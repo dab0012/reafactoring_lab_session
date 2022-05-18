@@ -310,7 +310,6 @@ public class Network {
 			currentNode.logging(report, aceptar);
 			currentNode = currentNode.nextNode_;
 		}
-		;
 
 		if (packet.atDestination(currentNode)) {
 			result = currentNode.printDocument(this, packet, report);
@@ -321,7 +320,6 @@ public class Network {
 			} catch (IOException exc) {
 				// just ignore
 			}
-			;
 			result = false;
 		}
 

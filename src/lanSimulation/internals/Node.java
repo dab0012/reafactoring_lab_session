@@ -169,5 +169,9 @@ public class Node {
 	public boolean atDestination(Node destination) {
 		return this != destination;
 	}
+	
+	public Node nextNode() {
+		return nextNode_;
+	}
 
 }

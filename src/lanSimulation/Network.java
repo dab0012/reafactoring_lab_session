@@ -211,26 +211,13 @@ public class Network {
 			// just ignore
 		}
 
-		Node currentNode = firstNode_;
 		Packet packet = new Packet("BROADCAST", firstNode_.name_, firstNode_.name_);
 		
 		boolean aceptar = true;
-		do {
-			
-			/*try {
-			//	report.write("\tNode '");
-			//	report.write(currentNode.name_);
-				report.write("' accepts broadcase packet.\n");
-			} catch (IOException exc) {
-				// just ignore
-			}
-	
-			*/
-			
-			currentNode.logging(report, aceptar);
-			currentNode = currentNode.nextNode();
-		} while (!packet.atDestination(currentNode));
-
+		
+		Node currentNode = doLogging(report, this.firstNode_, aceptar );
+		currentNode = send(report, aceptar, currentNode, packet );
+		
 		try {
 			report.write(">>> Broadcast travelled whole token ring.\n\n");
 		} catch (IOException exc) {
@@ -239,7 +226,14 @@ public class Network {
 		
 		return true;
 	}
-
+	
+	
+	private Node doLogging (Writer report, Node node, boolean condition ) {
+		node.logging(report, condition);
+		node = node.nextNode();
+		return node;
+		
+	}
 	/*
 	private Node send(Node currentNode, Packet packet, Writer report) {
 		
@@ -306,10 +300,8 @@ public class Network {
 
 		startNode.logging(report, aceptar);
 		currentNode = startNode.nextNode();
-		while ((!packet.atDestination(currentNode)) & (!packet.atOrigin(currentNode))) {
-			currentNode.logging(report, aceptar);
-			currentNode = currentNode.nextNode();
-		}
+		
+		currentNode = send(report, aceptar, currentNode, packet);
 
 		if (packet.atDestination(currentNode)) {
 			result = currentNode.printDocument(this, packet, report);
@@ -470,6 +462,14 @@ public class Network {
 			currentNode = currentNode.nextNode();
 		} while (currentNode.atDestination(destination));
 		buf.append("\n</network>");
+	}
+	
+	private Node send (Writer report, boolean condition, Node node, Packet packet) {
+		while ((!packet.atDestination(node)) & (!packet.origin_.equals(node.name_))) {
+			node = doLogging(report, node, condition);
+		}
+		return node;
+		
 	}
 
 }

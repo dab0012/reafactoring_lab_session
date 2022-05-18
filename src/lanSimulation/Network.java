@@ -213,7 +213,8 @@ public class Network {
 
 		Node currentNode = firstNode_;
 		Packet packet = new Packet("BROADCAST", firstNode_.name_, firstNode_.name_);
-
+		
+		boolean aceptar = true;
 		do {
 			
 			/*try {
@@ -226,7 +227,7 @@ public class Network {
 	
 			*/
 			
-			currentNode.logging(report, true);
+			currentNode.logging(report, aceptar);
 			currentNode = currentNode.nextNode_;
 		} while (!packet.atDestination(currentNode));
 
@@ -294,7 +295,8 @@ public class Network {
 		} catch (IOException exc) {
 			// just ignore
 		}
-		;
+		
+		boolean aceptar=false;
 
 		boolean result = false;
 		Node startNode, currentNode;
@@ -302,10 +304,10 @@ public class Network {
 
 		startNode = (Node) workstations_.get(workstation);
 
-		startNode.logging(report, false);
+		startNode.logging(report, aceptar);
 		currentNode = startNode.nextNode_;
 		while ((!packet.atDestination(currentNode)) & (!packet.atOrigin(currentNode))) {
-			currentNode.logging(report, false);
+			currentNode.logging(report, aceptar);
 			currentNode = currentNode.nextNode_;
 		}
 		;

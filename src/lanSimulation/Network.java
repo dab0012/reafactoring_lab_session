@@ -170,7 +170,7 @@ public class Network {
 				printersFound++;
 			}
 			;
-			currentNode = currentNode.nextNode_;
+			currentNode = currentNode.nextNode();
 		}
 		;
 		if (currentNode != firstNode_) {
@@ -228,7 +228,7 @@ public class Network {
 			*/
 			
 			currentNode.logging(report, aceptar);
-			currentNode = currentNode.nextNode_;
+			currentNode = currentNode.nextNode();
 		} while (!packet.atDestination(currentNode));
 
 		try {
@@ -252,7 +252,7 @@ public class Network {
 		}
 		
 		currentNode.logging(report, this);
-		currentNode=currentNode.nextNode_;
+		currentNode=currentNode.nextNode();
 		
 		if (!atDestination(currentNode, packet)) {
 			send(currentNode, packet, report);
@@ -305,10 +305,10 @@ public class Network {
 		startNode = (Node) workstations_.get(workstation);
 
 		startNode.logging(report, aceptar);
-		currentNode = startNode.nextNode_;
+		currentNode = startNode.nextNode();
 		while ((!packet.atDestination(currentNode)) & (!packet.atOrigin(currentNode))) {
 			currentNode.logging(report, aceptar);
-			currentNode = currentNode.nextNode_;
+			currentNode = currentNode.nextNode();
 		}
 
 		if (packet.atDestination(currentNode)) {
@@ -383,7 +383,7 @@ public class Network {
 			}
 			;
 			buf.append(" -> ");
-			currentNode = currentNode.nextNode_;
+			currentNode = currentNode.nextNode();
 		} while (currentNode.atDestination(destination));
 		buf.append(" ... ");
 	}
@@ -426,7 +426,7 @@ public class Network {
 			}
 			;
 			buf.append(" </LI>");
-			currentNode = currentNode.nextNode_;
+			currentNode = currentNode.nextNode();
 		} while (currentNode.atDestination(destination));
 		buf.append("\n\t<LI>...</LI>\n</UL>\n\n</BODY>\n</HTML>\n");
 	}
@@ -467,7 +467,7 @@ public class Network {
 				break;
 			}
 			;
-			currentNode = currentNode.nextNode_;
+			currentNode = currentNode.nextNode();
 		} while (currentNode.atDestination(destination));
 		buf.append("\n</network>");
 	}

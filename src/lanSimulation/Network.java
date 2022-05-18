@@ -213,17 +213,20 @@ public class Network {
 
 		Node currentNode = firstNode_;
 		Packet packet = new Packet("BROADCAST", firstNode_.name_, firstNode_.name_);
-		
+
 		do {
-			try {
-				report.write("\tNode '");
-				report.write(currentNode.name_);
+			
+			/*try {
+			//	report.write("\tNode '");
+			//	report.write(currentNode.name_);
 				report.write("' accepts broadcase packet.\n");
 			} catch (IOException exc) {
 				// just ignore
 			}
-			;				
-			currentNode.logging(report, this);
+	
+			*/
+			
+			currentNode.logging(report, true);
 			currentNode = currentNode.nextNode_;
 		} while (!packet.atDestination(currentNode));
 
@@ -299,10 +302,10 @@ public class Network {
 
 		startNode = (Node) workstations_.get(workstation);
 
-		startNode.logging(report, this);
+		startNode.logging(report, false);
 		currentNode = startNode.nextNode_;
 		while ((!packet.atDestination(currentNode)) & (!packet.atOrigin(currentNode))) {
-			currentNode.logging(report, this);
+			currentNode.logging(report, false);
 			currentNode = currentNode.nextNode_;
 		}
 		;

@@ -85,16 +85,26 @@ public class Node {
 		nextNode_ = nextNode;
 	}
 
-	public void logging(Writer report, Network network) {
+	public void logging(Writer report, boolean aceptar) {
+		
 		try {	
+			if (aceptar) {
+				report.write("\tNode '");
+				report.write(name_);
+				report.write("' accepts broadcase packet.\n");
+			}
+			
 			report.write("\tNode '");
 			report.write(name_);
 			report.write("' passes packet on.\n");
 			report.flush();
+
+
+			
 		} catch (IOException exc) {
-			// just ignore
+				// just ignore
 		}
-		;
+		
 	}
 
 	public boolean printDocument(Network network, Packet document, Writer report) {

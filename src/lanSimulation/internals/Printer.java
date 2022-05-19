@@ -6,12 +6,5 @@ public class Printer extends Node {
 		super(PRINTER, name);
 		// TODO Auto-generated constructor stub
 	}
-	
-	public void printOn(StringBuffer buf, Node currentNode) {
-		buf.append("Printer ");
-		buf.append(currentNode.name_);
-		buf.append(" [Printer]");
-		buf.append(" -> ");
-	}
 
 }

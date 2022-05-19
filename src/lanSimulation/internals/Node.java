@@ -191,34 +191,22 @@ public class Node {
 		Node currentNode = this;
 		Node destination = this;
 		do {
-			switch (currentNode.type_) {
-			case Node.NODE:
-				buf.append("Node ");
-				buf.append(currentNode.name_);
-				buf.append(" [Node]");
-				break;
-			case Node.WORKSTATION:
-				buf.append("Workstation ");
-				buf.append(currentNode.name_);
-				buf.append(" [Workstation]");
-				break;
-			case Node.PRINTER:
-				buf.append("Printer ");
-				buf.append(currentNode.name_);
-				buf.append(" [Printer]");
-				break;
-			default:
-				buf.append("(Unexpected)");
-				;
-				break;
-			}
-			;
-			buf.append(" -> ");
+			printOn(buf, currentNode);
 			currentNode = currentNode.nextNode();
 		} while (currentNode.atDestination(destination));
 		buf.append(" ... ");
 	}
 
+	public void printOn(StringBuffer buf, Node currentNode) {
+		buf.append("Node ");
+		buf.append(currentNode.name_);
+		buf.append(" [Node]");
+		buf.append(" -> ");
+		
+	}
+
+	
+	
 	/**
 	 * Write a HTML representation of #receiver on the given #buf.
 	 * <p>

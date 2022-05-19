@@ -25,10 +25,10 @@ public class Printer extends Node {
 	}
 	
 	@Override
-	public void printXMLOn(StringBuffer buf, Node currentNode) {
+	public void printXMLOn(StringBuffer buf) {
 		buf.append("\n\t");
 		buf.append("<printer>");
-		buf.append(currentNode.name_);
+		buf.append(name_);
 		buf.append("</printer>");
 
 	}

@@ -250,16 +250,16 @@ public class Node {
 		Node destination = this;
 		buf.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<network>");
 		do {
-			printXMLOn(buf, currentNode);
+			currentNode.printXMLOn(buf);
 			currentNode = currentNode.nextNode();
 		} while (currentNode.atDestination(destination));
 		buf.append("\n</network>");
 	}
 
-	public void printXMLOn(StringBuffer buf, Node currentNode) {
+	public void printXMLOn(StringBuffer buf) {
 		buf.append("\n\t");
 		buf.append("<node>");
-		buf.append(currentNode.name_);
+		buf.append(name_);
 		buf.append("</node>");
 
 	}

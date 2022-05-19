@@ -191,34 +191,20 @@ public class Node {
 		Node currentNode = this;
 		Node destination = this;
 		do {
-			switch (currentNode.type_) {
-			case Node.NODE:
-				buf.append("Node ");
-				buf.append(currentNode.name_);
-				buf.append(" [Node]");
-				break;
-			case Node.WORKSTATION:
-				buf.append("Workstation ");
-				buf.append(currentNode.name_);
-				buf.append(" [Workstation]");
-				break;
-			case Node.PRINTER:
-				buf.append("Printer ");
-				buf.append(currentNode.name_);
-				buf.append(" [Printer]");
-				break;
-			default:
-				buf.append("(Unexpected)");
-				;
-				break;
-			}
-			;
-			buf.append(" -> ");
+			currentNode.printOn(buf);
 			currentNode = currentNode.nextNode();
 		} while (currentNode.atDestination(destination));
 		buf.append(" ... ");
 	}
 
+	public void printOn(StringBuffer buf) {
+		buf.append("Node ");
+		buf.append(name_);
+		buf.append(" [Node]");
+		buf.append(" -> ");	
+	}
+
+	
 	/**
 	 * Write a HTML representation of #receiver on the given #buf.
 	 * <p>
@@ -235,33 +221,18 @@ public class Node {
 		Node destination = this;
 		buf.append("\n\n<UL>");
 		do {
-			buf.append("\n\t<LI> ");
-			switch (currentNode.type_) {
-			case Node.NODE:
-				buf.append("Node ");
-				buf.append(currentNode.name_);
-				buf.append(" [Node]");
-				break;
-			case Node.WORKSTATION:
-				buf.append("Workstation ");
-				buf.append(currentNode.name_);
-				buf.append(" [Workstation]");
-				break;
-			case Node.PRINTER:
-				buf.append("Printer ");
-				buf.append(currentNode.name_);
-				buf.append(" [Printer]");
-				break;
-			default:
-				buf.append("(Unexpected)");
-				;
-				break;
-			}
-			;
-			buf.append(" </LI>");
+			currentNode.printHTMLOn(buf);
 			currentNode = currentNode.nextNode();
 		} while (currentNode.atDestination(destination));
 		buf.append("\n\t<LI>...</LI>\n</UL>\n\n</BODY>\n</HTML>\n");
+	}
+
+	public void printHTMLOn(StringBuffer buf) {
+		buf.append("\n\t<LI> ");
+		buf.append("Node ");
+		buf.append(name_);
+		buf.append(" [Node]");
+		buf.append(" </LI>");
 	}
 
 	/**

@@ -84,6 +84,10 @@ public class Node {
 		name_ = name;
 		nextNode_ = nextNode;
 	}
+	
+	public Node(String name) {
+		this(NODE, name);
+	}
 
 	public void logging(Writer report, boolean aceptar) {
 		

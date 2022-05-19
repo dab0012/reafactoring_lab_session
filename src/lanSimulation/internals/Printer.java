@@ -23,4 +23,13 @@ public class Printer extends Node {
 		buf.append(" [Printer]");
 		buf.append(" </LI>");
 	}
+	
+	@Override
+	public void printXMLOn(StringBuffer buf, Node currentNode) {
+		buf.append("\n\t");
+		buf.append("<printer>");
+		buf.append(currentNode.name_);
+		buf.append("</printer>");
+
+	}
 }

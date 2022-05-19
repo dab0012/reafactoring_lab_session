@@ -23,5 +23,14 @@ public class WorkStation extends Node{
 		buf.append(" [Workstation]");
 		buf.append(" </LI>");
 	}
+	
+	@Override
+	public void printXMLOn(StringBuffer buf, Node currentNode) {
+		buf.append("\n\t");
+		buf.append("<workstation>");
+		buf.append(currentNode.name_);
+		buf.append("</workstation>");
+
+	}
 
 }
